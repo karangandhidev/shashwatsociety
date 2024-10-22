@@ -41,7 +41,7 @@ export async function GET(req: NextRequest) {
   const sprints = await prisma.sprint.findMany({
     where: {
       OR: [{ status: SprintStatus.ACTIVE }, { status: SprintStatus.PENDING }],
-      creatorId: userId ?? "init",
+      // creatorId: userId ?? "init",
     },
     orderBy: {
       createdAt: "asc",
