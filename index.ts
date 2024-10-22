@@ -1,3 +1,5 @@
+/* eslint-disable no-use-before-define */
+
 const fs = require('fs');
 const pg = require('pg');
 const url = require('url');
