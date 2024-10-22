@@ -36,7 +36,7 @@ export async function PATCH(req: NextRequest, { params }: ParamsType) {
 
   if (!validated.success) {
     const message =
-      "Invalid body. " + (validated.error.errors[0]?.message ?? "");
+      "Invalid body. " + (validated.error.errors[0]?.message || "");
     return new Response(message, { status: 400 });
   }
 
