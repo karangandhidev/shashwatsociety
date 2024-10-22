@@ -55,3 +55,6 @@ Contributions to this project are welcome. Feel free to submit bug reports, feat
 This project is licensed under the [MIT](https://opensource.org/licenses/MIT) license.
 
 <hr>
+
+
+Using [Jira Clone](https://github.com/sebastianfdz/jira_clone) as the base for this project 
