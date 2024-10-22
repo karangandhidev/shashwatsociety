@@ -47,4 +47,4 @@ config.load
 
 
 # db certificate
-index.ts
+/index.ts
