@@ -24,7 +24,8 @@
       {
         "name": "next"
       }
-    ]
+    ],
+    "typeRoots": ["./types", "./node_modules/@types"]
   },
   "include": [
     ".eslintrc.cjs",
@@ -33,7 +34,9 @@
     "**/*.tsx",
     "**/*.cjs",
     "**/*.mjs",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "./types/**/*.d.ts", 
+    "./src/**/*"
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules","index.ts"]
 }
