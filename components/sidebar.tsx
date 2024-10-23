@@ -66,7 +66,7 @@ const Sidebar: React.FC = () => {
   const handleSaveChanges = async (userIds: string[]) => {
     // Add selected users to the members table
     await Promise.all(userIds.map(async (userId) => {
-      await fetch('/api/add-member', { // Create an API endpoint for adding members
+      await fetch('/api/addMembers', { // Create an API endpoint for adding members
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -101,9 +101,9 @@ const Sidebar: React.FC = () => {
         <UserSelectionModal
           users={selectedUsers}
           onClose={() => setIsModalOpen(false)}
-          onSave={handleSaveChanges} setUsers={function (value: React.SetStateAction<{ id: string; name: string; added: boolean; }[]>): void {
-            throw new Error("Function not implemented.");
-          } }        />
+          onSave={handleSaveChanges} 
+          setUsers={setSelectedUsers}
+          />
       )}
       <NavList label={"PLANNING"} items={planningItems} />
       <NavList label={"DEVELOPMENT"} items={developmentItems} />

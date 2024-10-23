@@ -20,8 +20,8 @@ const UserSelectionModal: React.FC<{
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white rounded-lg p-5 shadow-lg">
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+      <div className="bg-white rounded-lg p-5 shadow-lg w-80">
         <h2 className="text-lg font-bold">Select Users</h2>
         <div className="max-h-60 overflow-y-auto">
           {users.map(user => (
@@ -30,12 +30,13 @@ const UserSelectionModal: React.FC<{
                 type="checkbox"
                 checked={user.added}
                 onChange={() => handleUserChange(user.id)}
+                className="m-2.5"
               />
               <span className="ml-2">{user.name}</span>
             </div>
           ))}
         </div>
-        <div className="mt-4 flex justify-end">
+        <div className="mt-4 flex justify-between">
           <button className="text-blue-500" onClick={onClose}>Cancel</button>
           <button className="ml-2 bg-blue-500 text-white px-4 py-2 rounded" onClick={handleSave}>Save Changes</button>
         </div>
