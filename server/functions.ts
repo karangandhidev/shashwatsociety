@@ -25,7 +25,7 @@ export async function getInitialIssuesFromServer(
 
     const newActiveIssues = await prisma.issue.findMany({
       where: {
-        creatorId: userId,
+        // creatorId: userId,
         isDeleted: false,
       },
     });

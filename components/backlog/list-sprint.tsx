@@ -62,6 +62,7 @@ const SprintListHeader: React.FC<{ issues: IssueType[]; sprint: Sprint }> = ({
   function handleDeleteSprint() {
     if (!isAuthenticated) {
       openAuthModal();
+      console.log("not authenticated")
       return;
     }
     deleteSprint(
