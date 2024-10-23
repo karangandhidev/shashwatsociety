@@ -7,6 +7,7 @@ import {
   getInitialProjectFromServer,
   getInitialSprintsFromServer,
 } from "@/server/functions";
+import { syncUserWithPrismaByEmail } from "@/server/utils/syncUsers";
 
 export const metadata: Metadata = {
   title: "Backlog",
@@ -15,9 +16,12 @@ export const metadata: Metadata = {
 const BacklogPage = async () => {
   const user = await currentUser();
   const queryClient = getQueryClient();
+
   if (!user) {
     return null;
-  }
+  } 
+  await syncUserWithPrismaByEmail(user.id);
+  
   await Promise.all([
     await queryClient.prefetchQuery(["issues"], () =>
       getInitialIssuesFromServer(user?.id)
