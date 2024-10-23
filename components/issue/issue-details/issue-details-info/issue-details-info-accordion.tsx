@@ -72,7 +72,7 @@ const IssueDetailsInfoAccordion: React.FC<{ issue: IssueType }> = ({
                 data-state={issue.assignee ? "assigned" : "unassigned"}
                 customColors
                 customPadding
-                className="mt-1 hidden text-sm text-blue-600 underline-offset-2 hover:underline [&[data-state=unassigned]]:flex"
+                className="mt-1 text-sm text-blue-600 underline-offset-2 hover:underline "
               >
                 Assign to me
               </Button>

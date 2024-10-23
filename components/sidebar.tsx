@@ -10,6 +10,8 @@ import {
 import { usePathname } from "next/navigation";
 import { FaChessPawn, FaChevronRight } from "react-icons/fa";
 import { useProject } from "@/hooks/query-hooks/use-project";
+import { UserSelectionModal } from "./modals/add-user/UserSelection";
+import { getBaseUrl, getHeaders } from "../utils/helpers";
 
 type NavItemType = {
   id: string;
@@ -17,9 +19,13 @@ type NavItemType = {
   icon: React.FC<{ className?: string }>;
   href: string;
 };
+const baseUrl = getBaseUrl();
 
 const Sidebar: React.FC = () => {
   const { project } = useProject();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedUsers, setSelectedUsers] = useState<{ id: string; name: string; added: boolean }[]>([]);
+
   const planningItems = [
     {
       id: "roadmap",
@@ -49,6 +55,27 @@ const Sidebar: React.FC = () => {
       href: `/project/`,
     },
   ];
+  const handleAddUsersClick = async () => {
+    // Fetch users from the database using Prisma
+    const response = await fetch(`${baseUrl}/api/members`); // Create an API endpoint to fetch users
+    const users = await response.json();
+    setSelectedUsers(users.users.map((user: { id: any; name: any; }) => ({ id: user.id, name: user.name, added: false }))); // Initialize selected users
+    setIsModalOpen(true);
+  };
+
+  const handleSaveChanges = async (userIds: string[]) => {
+    // Add selected users to the members table
+    await Promise.all(userIds.map(async (userId) => {
+      await fetch('/api/addMembers', { // Create an API endpoint for adding members
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: userId,
+          projectId: project?.id, // Assuming you have access to the project ID
+        }),
+      });
+  }));
+}
   return (
     <div className="flex h-full w-64 flex-col gap-y-5 bg-gray-50 p-3 shadow-inner">
       <div className="my-5 flex items-center gap-x-2 px-3">
@@ -62,6 +89,22 @@ const Sidebar: React.FC = () => {
           <p className="text-xs text-gray-500">Software Project</p>
         </div>
       </div>
+      <button
+        className="flex items-center gap-x-1 rounded-md bg-blue-500 p-2 text-white"
+        onClick={handleAddUsersClick}
+      >
+        <span>+</span>
+        <span>Add Users to Dashboard</span>
+      </button>
+      {/* Add the modal for user selection */}
+      {isModalOpen && (
+        <UserSelectionModal
+          users={selectedUsers}
+          onClose={() => setIsModalOpen(false)}
+          onSave={handleSaveChanges} 
+          setUsers={setSelectedUsers}
+          />
+      )}
       <NavList label={"PLANNING"} items={planningItems} />
       <NavList label={"DEVELOPMENT"} items={developmentItems} />
     </div>
