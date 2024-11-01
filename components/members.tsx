@@ -2,8 +2,6 @@ import { useFiltersContext } from "@/context/use-filters-context";
 import { useProject } from "@/hooks/query-hooks/use-project";
 import { Button } from "./ui/button";
 import { Avatar } from "./avatar";
-import { NotImplemented } from "./not-implemented";
-import { AddPeopleIcon } from "./svgs";
 
 const Members = () => {
   const { members } = useProject();
@@ -47,14 +45,6 @@ const Members = () => {
         );
       })}
 
-      <NotImplemented feature="add people">
-        <button>
-          <AddPeopleIcon
-            className="ml-3 rounded-full bg-gray-200 p-1 text-gray-500"
-            size={35}
-          />
-        </button>
-      </NotImplemented>
     </div>
   );
 };

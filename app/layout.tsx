@@ -1,4 +1,4 @@
-import { ClerkProvider } from "@clerk/nextjs/app-beta";
+import { ClerkProvider } from "@clerk/nextjs";
 import { type Metadata } from "next";
 import { siteConfig } from "@/config/site";
 import "@/styles/globals.css";
@@ -25,11 +25,15 @@ export const metadata: Metadata = {
   ],
   authors: [
     {
-      name: "Sebastian Fernandez",
-      url: "https://sebastianfdz.com",
+      name: "Karan Gandhi",
+      url: "https://www.linkedin.com/in/karangandhidev/",
+    },
+    {
+      name: "Isha Sharma",
+      url: "https://www.linkedin.com/in/ishhasharma/",
     },
   ],
-  creator: "Sebastian Fernandez",
+  creator: "Karan Gandhi, Isha Sharma",
   openGraph: {
     type: "website",
     locale: "en_US",

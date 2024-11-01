@@ -1,10 +1,8 @@
-import { MdClose, MdOutlineShare, MdRemoveRedEye } from "react-icons/md";
-import { AiOutlineLike } from "react-icons/ai";
+import { MdClose } from "react-icons/md";
 import { IssueDropdownMenu } from "../issue-menu";
 import { DropdownTrigger } from "../../ui/dropdown-menu";
 import { IssuePath } from "../issue-path";
 import { type IssueType } from "@/utils/types";
-import { NotImplemented } from "@/components/not-implemented";
 import { Button } from "@/components/ui/button";
 import { BsThreeDots } from "react-icons/bs";
 
@@ -21,21 +19,6 @@ const IssueDetailsHeader: React.FC<{
     >
       <IssuePath issue={issue} setIssueKey={setIssueKey} />
       <div className="relative flex items-center gap-x-0.5">
-        <NotImplemented feature="watch">
-          <Button customColors className="bg-transparent hover:bg-gray-200">
-            <MdRemoveRedEye className="text-xl" />
-          </Button>
-        </NotImplemented>
-        <NotImplemented feature="like">
-          <Button customColors className="bg-transparent hover:bg-gray-200">
-            <AiOutlineLike className="text-xl" />
-          </Button>
-        </NotImplemented>
-        <NotImplemented feature="share">
-          <Button customColors className="bg-transparent hover:bg-gray-200">
-            <MdOutlineShare className="text-xl" />
-          </Button>
-        </NotImplemented>
         <IssueDropdownMenu issue={issue}>
           <DropdownTrigger
             asChild
