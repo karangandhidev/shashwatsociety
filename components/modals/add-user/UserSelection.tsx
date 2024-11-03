@@ -17,6 +17,7 @@ const UserSelectionModal: React.FC<{
     const selectedUserIds = users.filter(user => user.added).map(user => user.id);
     onSave(selectedUserIds);
     onClose();
+    window.location.reload();
   };
 
   return (

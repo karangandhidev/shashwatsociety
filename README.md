@@ -1,8 +1,4 @@
-<h1 align="center">Jira Clone built with React and Next.js 13 (app dir)</h1>
-
-![Tech stack](./assets/readme/tech-stack.png)
-
-![App screenshot](./assets/readme/backlog-screenshot.png)
+<h1 align="center">Shashwat Society Dashboard built with React and Next.js 13 (app dir)</h1>
 
 ## Features
 
@@ -21,7 +17,7 @@
 ## Setting up development environment
 
 - Project uses Prisma, you can decide which database to use. \*By default it uses the 'mysql' provider
-- `git clone https://github.com/sebastianfdz/jira_clone`
+- `git clone https://github.com/karangandhidev/shashwatsociety`
 - Create an empty `.env` file inside the root dir `/`, copy `/.env.example` contents into it, and fill in the variables needed.
 - `npm install`
 - `npx prisma db seed`
@@ -41,9 +37,6 @@ Unit and integration tests are currently in progress... The app will be using [V
 
 End to end tests are currently in progress as well... The app will be using [Cypress](https://www.cypress.io/).
 
-## Contributing
-
-Contributions to this project are welcome. Feel free to submit bug reports, feature requests, or pull requests to help improve the app.
 
 ## Acknowledgements
 

@@ -16,7 +16,7 @@ export const EditorComposer: React.FC<{
   return (
     <LexicalComposer
       initialConfig={{
-        namespace: "Jira Clone",
+        namespace: "Shashwat Society Dashboard",
         editorState: JSON.stringify(jsonState),
         editable: !readonly,
         theme: theme,

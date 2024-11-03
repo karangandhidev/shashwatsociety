@@ -6,6 +6,7 @@ import {
   getInitialIssuesFromServer,
   getInitialProjectFromServer,
   getInitialSprintsFromServer,
+  deleteInactiveMembers,
 } from "@/server/functions";
 import { syncUserWithPrismaByEmail } from "@/server/utils/syncUsers";
 
@@ -30,6 +31,7 @@ const BacklogPage = async () => {
       getInitialSprintsFromServer(user?.id)
     ),
     await queryClient.prefetchQuery(["project"], getInitialProjectFromServer),
+    deleteInactiveMembers(),
   ]);
 
 

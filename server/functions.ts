@@ -1,12 +1,6 @@
 import { filterUserForClient, generateIssuesForClient } from "@/utils/helpers";
 import { type UserResource } from "@clerk/types";
 import { clerkClient } from "@clerk/nextjs";
-import {
-  defaultUsers,
-  generateInitialUserComments,
-  generateInitialUserIssues,
-  generateInitialUserSprints,
-} from "../prisma/seed-data";
 import { prisma } from "./db";
 import { SprintStatus } from "@prisma/client";
 
@@ -18,10 +12,6 @@ export async function getInitialIssuesFromServer(
   });
 
   if (userId && (!activeIssues || activeIssues.length === 0)) {
-    // New user, create default issues
-    await initDefaultIssues(userId);
-    // Create comments for default issues
-    await initDefaultIssueComments(userId);
 
     const newActiveIssues = await prisma.issue.findMany({
       where: {
@@ -95,8 +85,6 @@ export async function getInitialSprintsFromServer(
 
   if (userId && (!sprints || sprints.length === 0)) {
     // New user, create default sprints
-    await initDefaultSprints(userId);
-
     const newSprints = await prisma.sprint.findMany({
       where: {
         creatorId: userId,
@@ -120,95 +108,29 @@ export async function initProject() {
     },
   });
 }
-export async function initDefaultUsers() {
-  await Promise.all(
-    defaultUsers.map(
-      async (user) =>
-        await prisma.defaultUser.upsert({
-          where: {
-            id: user.id,
-          },
-          update: {
-            avatar: user.avatar,
-          },
-          create: {
-            id: user.id,
-            email: user.email,
-            name: user.name,
-            avatar: user.avatar,
-          },
-        })
-    )
-  );
-}
-export async function initDefaultProjectMembers() {
-  await Promise.all(
-    defaultUsers.map(
-      async (user) =>
-        await prisma.member.upsert({
-          where: {
-            id: user.id,
-          },
-          update: {},
-          create: {
-            id: user.id,
-            projectId: "init-project-id-dq8yh-d0as89hjd",
-          },
-        })
-    )
-  );
-}
 
-export async function initDefaultIssues(userId: string) {
-  const initialIssues = generateInitialUserIssues(userId);
-  await Promise.all(
-    initialIssues.map(
-      async (issue) =>
-        await prisma.issue.upsert({
-          where: {
-            id: issue.id,
+export async function deleteInactiveMembers() {
+  // Find all member IDs that do not exist in the defaultUser table
+  const inactiveMembers = await prisma.member.findMany({
+    where: {
+      id: {
+        notIn: (await prisma.defaultUser.findMany({
+          select: {
+            id: true,
           },
-          update: {},
-          create: {
-            ...issue,
-          },
-        })
-    )
-  );
-}
+        })).map((user) => user.id),
+      },
+    },
+  });
 
-export async function initDefaultIssueComments(userId: string) {
-  const initialComments = generateInitialUserComments(userId);
-  await Promise.all(
-    initialComments.map(
-      async (comment) =>
-        await prisma.comment.upsert({
-          where: {
-            id: comment.id,
-          },
-          update: {},
-          create: {
-            ...comment,
-          },
-        })
-    )
-  );
-}
+  // Delete members whose IDs were not found in the defaultUser table
+  await prisma.member.deleteMany({
+    where: {
+      id: {
+        in: inactiveMembers.map((member) => member.id),
+      },
+    },
+  });
 
-export async function initDefaultSprints(userId: string) {
-  const initialSprints = generateInitialUserSprints(userId);
-  await Promise.all(
-    initialSprints.map(
-      async (sprint) =>
-        await prisma.sprint.upsert({
-          where: {
-            id: sprint.id,
-          },
-          update: {},
-          create: {
-            ...sprint,
-          },
-        })
-    )
-  );
+  console.log(`${inactiveMembers.length} member(s) deleted`);
 }
